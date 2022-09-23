@@ -140,6 +140,44 @@
                 </div>
             </div>
             <div class="accordion-item">
+                <h2 class="accordion-header" id="headingCharref">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseCharref" aria-expanded="false" aria-controls="collapseCharref">
+                        文字実体参照／数値文字参照
+                    </button>
+                </h2>
+                <div id="collapseCharref" class="accordion-collapse collapse" aria-labelledby="headingCharref"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="container my-5">
+                            <div class="row">
+                                <div class="col-2 offset-1 text-start">
+                                    <label for="charref_message" class="form-label">
+                                        Message
+                                    </label>
+                                </div>
+                                <div class="col-8">
+                                    <textarea class="form-control" id="charref_message" rows="6"></textarea>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-2 offset-1 text-start">
+                                    <select class="form-select" aria-label="Escape type" id="escapetype"
+                                        name="escapetype">
+                                        <option value="escapeCharacterEntityReference" selected>エスケープ（文字実体参照）</option>
+                                        <option value="escapeNumericCharacterReference">エスケープ（数値文字参照）</option>
+                                        <option value="unescapeAll">アンエスケープ</option>
+                                    </select>
+                                </div>
+                                <div class="col-8">
+                                    <textarea class="form-control" id="charref_escaped" rows="6"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
                 <h2 class="accordion-header" id="headingThree">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
