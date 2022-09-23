@@ -22,23 +22,61 @@ const text2hash = (hashtype, plaintext) => {
 window.addEventListener('DOMContentLoaded', (event) => {
 
     // フォーカス時に全選択
-    document.getElementById('text2hash_range').addEventListener('focus', function () {
+    document.getElementById('text2hash_hashed').addEventListener('focus', function () {
         this.select();
     });
 
     // 変換
     document.getElementById('hashtype').addEventListener('change', function () {
-        document.getElementById('text2hash_range').textContent = text2hash(
+        document.getElementById('text2hash_hashed').textContent = text2hash(
             document.getElementById('hashtype').value,
             document.getElementById('text2hash_message').value
         );
     });
 
     document.getElementById('text2hash_message').addEventListener('keyup', function () {
-        document.getElementById('text2hash_range').textContent = text2hash(
+        document.getElementById('text2hash_hashed').textContent = text2hash(
             document.getElementById('hashtype').value,
             document.getElementById('text2hash_message').value
         );
+    });
+
+    document.getElementById('encodeuri_decoded').addEventListener('keyup', function () {
+        document.getElementById('encodeuri_encoded').textContent = encodeURI(
+            document.getElementById('encodeuri_decoded').value
+        );
+    });
+
+    document.getElementById('encodeuricomponent_decoded').addEventListener('keyup', function () {
+        document.getElementById('encodeuricomponent_encoded').textContent = encodeURIComponent(
+            document.getElementById('encodeuricomponent_decoded').value
+        );
+    });
+
+    document.getElementById('encodeuri_encoded').addEventListener('keyup', function () {
+        let decoded = "";
+        try {
+            decoded = decodeURI(
+                document.getElementById('encodeuri_encoded').value
+            );
+        } catch (err) {
+            decoded = document.getElementById('encodeuri_encoded').value;
+        }
+
+        document.getElementById('encodeuri_decoded').textContent = decoded;
+    });
+
+    document.getElementById('encodeuricomponent_encoded').addEventListener('keyup', function () {
+        let decoded = "";
+        try {
+            decoded = decodeURIComponent(
+                document.getElementById('encodeuricomponent_encoded').value
+            );
+        } catch (err) {
+            decoded = document.getElementById('encodeuricomponent_encoded').value;
+        }
+
+        document.getElementById('encodeuricomponent_decoded').textContent = decoded;
     });
 
 });

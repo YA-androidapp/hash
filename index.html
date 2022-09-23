@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>hash</title>
+    <title>textconv</title>
     <meta name="description" content="hash">
     <meta name="author" content="YA-androidapp(https://github.com/YA-androidapp)">
 
@@ -19,7 +19,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                hash
+                textconv
             </a>
         </div>
     </nav>
@@ -31,7 +31,7 @@
                 <h2 class="accordion-header" id="headingText2hash">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseText2hash" aria-expanded="true" aria-controls="collapseText2hash">
-                        text2hash
+                        ハッシュ値
                     </button>
                 </h2>
                 <div id="collapseText2hash" class="accordion-collapse collapse show" aria-labelledby="headingText2hash"
@@ -59,7 +59,80 @@
                                     </select>
                                 </div>
                                 <div class="col-8">
-                                    <textarea class="form-control" id="text2hash_range" rows="6"></textarea>
+                                    <textarea class="form-control" id="text2hash_hashed" rows="6"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingEncodeURI">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseEncodeURI" aria-expanded="false" aria-controls="collapseEncodeURI">
+                        URLエンコード／デコード (EncodeURI / DecodeURI )
+                    </button>
+                </h2>
+                <div id="collapseEncodeURI" class="accordion-collapse collapse" aria-labelledby="headingEncodeURI"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="container my-5">
+                            <div class="row">
+                                <div class="col-2 offset-1 text-start">
+                                    <label for="encodeuri_decoded" class="form-label">
+                                        Message
+                                    </label>
+                                </div>
+                                <div class="col-8">
+                                    <textarea class="form-control" id="encodeuri_decoded" rows="6"
+                                        placeholder=" A-Z a-z 0-9 ; , / ? : @ & = + $ - _ . ! ~ * ' ( ) # は変換されない"></textarea>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-2 offset-1 text-start">
+                                    <label for="encodeuri_encoded" class="form-label">
+                                        Result
+                                    </label>
+                                </div>
+                                <div class="col-8">
+                                    <textarea class="form-control" id="encodeuri_encoded" rows="6"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingEncodeURIComponent">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseEncodeURIComponent" aria-expanded="false"
+                        aria-controls="collapseEncodeURIComponent">
+                        URLエンコード／デコード ( EncodeURIComponent / DecodeURIComponent )
+                    </button>
+                </h2>
+                <div id="collapseEncodeURIComponent" class="accordion-collapse collapse"
+                    aria-labelledby="headingEncodeURIComponent" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="container my-5">
+                            <div class="row">
+                                <div class="col-2 offset-1 text-start">
+                                    <label for="encodeuricomponent_decoded" class="form-label">
+                                        Message
+                                    </label>
+                                </div>
+                                <div class="col-8">
+                                    <textarea class="form-control" id="encodeuricomponent_decoded" rows="6"
+                                        placeholder=" A-Z a-z 0-9 - _ . ! ~ * ' ( ) は変換されない"></textarea>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-2 offset-1 text-start">
+                                    <label for="encodeuricomponent_encoded" class="form-label">
+                                        Result
+                                    </label>
+                                </div>
+                                <div class="col-8">
+                                    <textarea class="form-control" id="encodeuricomponent_encoded" rows="6"></textarea>
                                 </div>
                             </div>
                         </div>
