@@ -150,7 +150,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         document.getElementById('jsonTsv_tsv').value = '';
     });
 
-    document.getElementById('insertTab').addEventListener('click', function () {
+    document.getElementById('insertTabTsv').addEventListener('click', function () {
         const jsonTsvTextareaTsv = document.getElementById('jsonTsv_tsv');
 
         jsonTsvTextareaTsv.value = jsonTsvTextareaTsv.value.substr(0, jsonTsvTextareaTsv.selectionStart)
@@ -222,6 +222,55 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 // console.error(error);
                 document.getElementById('jsonTsv_alert').innerText = error;
                 document.getElementById('jsonTsv_alert').style.display = 'block';
+            }
+        }
+    });
+
+
+    // JSON <==> YAML
+    document.getElementById('clearJsonYaml').addEventListener('click', function () {
+        document.getElementById('jsonYaml_json').value = '';
+        document.getElementById('jsonYaml_yaml').value = '';
+    });
+
+    document.getElementById('jsonYaml_json').addEventListener('keyup', function () {
+        if (document.getElementById('jsonYaml_json').value === '') {
+            document.getElementById('jsonYaml_yaml').value = '';
+
+            document.getElementById('jsonYaml_alert').innerText = '';
+            document.getElementById('jsonYaml_alert').style.display = 'none';
+        } else {
+            try {
+                const yamlStr = json2yaml(document.getElementById('jsonYaml_json').value);
+                document.getElementById('jsonYaml_yaml').value = yamlStr;
+
+                document.getElementById('jsonYaml_alert').innerText = '';
+                document.getElementById('jsonYaml_alert').style.display = 'none';
+            } catch (error) {
+                // console.error(error);
+                document.getElementById('jsonYaml_alert').innerText = error;
+                document.getElementById('jsonYaml_alert').style.display = 'block';
+            }
+        }
+    });
+
+    document.getElementById('jsonYaml_yaml').addEventListener('keyup', function () {
+        if (document.getElementById('jsonYaml_yaml').value === '') {
+            document.getElementById('jsonYaml_json').value = '';
+
+            document.getElementById('jsonYaml_alert').innerText = '';
+            document.getElementById('jsonYaml_alert').style.display = 'none';
+        } else {
+            try {
+                const jsonStr = yaml2json(document.getElementById('jsonYaml_yaml').value);
+                document.getElementById('jsonYaml_json').value = jsonStr;
+
+                document.getElementById('jsonYaml_alert').innerText = '';
+                document.getElementById('jsonYaml_alert').style.display = 'none';
+            } catch (error) {
+                // console.error(error);
+                document.getElementById('jsonYaml_alert').innerText = error;
+                document.getElementById('jsonYaml_alert').style.display = 'block';
             }
         }
     });
