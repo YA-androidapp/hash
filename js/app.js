@@ -1,4 +1,4 @@
-// Copyright (c) 2022 YA-androidapp(https://github.com/YA-androidapp) All rights reserved.
+// Copyright (c) 2023 YA-androidapp(https://github.com/YA-androidapp) All rights reserved.
 
 
 const text2hash = (hashtype, plaintext) => {
@@ -84,9 +84,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // エスケープ
     const escapeCharacterEntityReference = (str) => {
         return str
+            .replace(/&/g, '&amp;')
+
             .replace(/'/g, '&apos;')
             .replace(/"/g, '&quot;')
-            .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
             ;
@@ -140,6 +141,52 @@ window.addEventListener('DOMContentLoaded', (event) => {
             document.getElementById('escapetype').value,
             document.getElementById('charref_message').value
         );
+    });
+
+
+    // JSON <==> TSV
+    document.getElementById('jsonTsv_json').addEventListener('keyup', function () {
+        try {
+            const tsvStr = json2tsv(
+                document.getElementById('jsonTsv_json').value,
+                {
+                    quotes: false, //or array of booleans
+                    quoteChar: '"',
+                    escapeChar: '"',
+                    delimiter: document.getElementById('delimiter').value === "\\t" ? "\t" : document.getElementById('delimiter').value,
+                    header: document.getElementById('header').value,
+                    newline: "\r\n",
+                    skipEmptyLines: false, //other option is 'greedy', meaning skip delimiters, quotes, and whitespace.
+                    columns: null //or array of strings
+                }
+            );
+            document.getElementById('jsonTsv_tsv').value = tsvStr;
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+    document.getElementById('jsonTsv_tsv').addEventListener('keyup', function () {
+        try {
+            const jsonStr = tsv2json(
+                document.getElementById('jsonTsv_tsv').value,
+                {
+                    comments: "#",
+                    delimiter: document.getElementById('delimiter').value === "\\t" ? "\t" : document.getElementById('delimiter').value, // auto-detect
+                    dynamicTyping: true,
+                    escapeChar: '"',
+                    header: document.getElementById('header').value,
+                    newline: "", // auto-detect
+                    preview: 0,
+                    quoteChar: '"',
+                    skipEmptyLines: false,
+                    skipFirstNLines: 0,
+                }
+            );
+            document.getElementById('jsonTsv_json').value = jsonStr;
+        } catch (error) {
+            console.error(error);
+        }
     });
 
 });
