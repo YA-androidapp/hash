@@ -1,1 +1,10 @@
 /* Copyright (c) 2023 YA-androidapp(https://github.com/YA-androidapp) All rights reserved. */
+
+
+.form-control::placeholder {
+    color: #ddd;
+}
+
+#jsonTsv_alert {
+    display: none;
+}

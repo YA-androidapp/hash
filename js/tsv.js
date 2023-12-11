@@ -14,7 +14,7 @@ const tsv2json = (tsvStr, config) => {
     console.log(jsonObj.meta.delimiter);
 
     // const jsonStr = JSON.stringify(jsonObj);
-    const jsonStr = JSON.stringify(jsonObj, null, "\t");
+    const jsonStr = JSON.stringify(jsonObj.data, null, "\t");
     console.log(jsonStr);
 
     return jsonStr;

@@ -145,47 +145,84 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
     // JSON <==> TSV
+    document.getElementById('clearJsonTsv').addEventListener('click', function () {
+        document.getElementById('jsonTsv_json').value = '';
+        document.getElementById('jsonTsv_tsv').value = '';
+    });
+
+    document.getElementById('insertTab').addEventListener('click', function () {
+        const jsonTsvTextareaTsv = document.getElementById('jsonTsv_tsv');
+
+        jsonTsvTextareaTsv.value = jsonTsvTextareaTsv.value.substr(0, jsonTsvTextareaTsv.selectionStart)
+            + "\t"
+            + jsonTsvTextareaTsv.value.substr(jsonTsvTextareaTsv.selectionStart);
+    });
+
     document.getElementById('jsonTsv_json').addEventListener('keyup', function () {
-        try {
-            const tsvStr = json2tsv(
-                document.getElementById('jsonTsv_json').value,
-                {
-                    quotes: false, //or array of booleans
-                    quoteChar: '"',
-                    escapeChar: '"',
-                    delimiter: document.getElementById('delimiter').value === "\\t" ? "\t" : document.getElementById('delimiter').value,
-                    header: document.getElementById('header').value,
-                    newline: "\r\n",
-                    skipEmptyLines: false, //other option is 'greedy', meaning skip delimiters, quotes, and whitespace.
-                    columns: null //or array of strings
-                }
-            );
-            document.getElementById('jsonTsv_tsv').value = tsvStr;
-        } catch (error) {
-            console.error(error);
+        if (document.getElementById('jsonTsv_json').value === '') {
+            document.getElementById('jsonTsv_tsv').value = '';
+
+            document.getElementById('jsonTsv_alert').innerText = '';
+            document.getElementById('jsonTsv_alert').style.display = 'none';
+        } else {
+            try {
+                const tsvStr = json2tsv(
+                    document.getElementById('jsonTsv_json').value,
+                    {
+                        quotes: false, //or array of booleans
+                        quoteChar: '"',
+                        escapeChar: '"',
+                        delimiter: document.getElementById('delimiter').value === "" ? "," : (document.getElementById('delimiter').value === "\\t" ? "\t" : document.getElementById('delimiter').value),
+                        header: document.getElementById('header').value,
+                        newline: "\r\n",
+                        skipEmptyLines: true, //other option is 'greedy', meaning skip delimiters, quotes, and whitespace.
+                        columns: null //or array of strings
+                    }
+                );
+                document.getElementById('jsonTsv_tsv').value = tsvStr;
+
+                document.getElementById('jsonTsv_alert').innerText = '';
+                document.getElementById('jsonTsv_alert').style.display = 'none';
+            } catch (error) {
+                // console.error(error);
+                document.getElementById('jsonTsv_alert').innerText = error;
+                document.getElementById('jsonTsv_alert').style.display = 'block';
+            }
         }
     });
 
     document.getElementById('jsonTsv_tsv').addEventListener('keyup', function () {
-        try {
-            const jsonStr = tsv2json(
-                document.getElementById('jsonTsv_tsv').value,
-                {
-                    comments: "#",
-                    delimiter: document.getElementById('delimiter').value === "\\t" ? "\t" : document.getElementById('delimiter').value, // auto-detect
-                    dynamicTyping: true,
-                    escapeChar: '"',
-                    header: document.getElementById('header').value,
-                    newline: "", // auto-detect
-                    preview: 0,
-                    quoteChar: '"',
-                    skipEmptyLines: false,
-                    skipFirstNLines: 0,
-                }
-            );
-            document.getElementById('jsonTsv_json').value = jsonStr;
-        } catch (error) {
-            console.error(error);
+        if (document.getElementById('jsonTsv_tsv').value === '') {
+            document.getElementById('jsonTsv_json').value = '';
+
+            document.getElementById('jsonTsv_alert').innerText = '';
+            document.getElementById('jsonTsv_alert').style.display = 'none';
+        } else {
+            try {
+                const jsonStr = tsv2json(
+                    document.getElementById('jsonTsv_tsv').value,
+                    {
+                        comments: "#",
+                        delimiter: document.getElementById('delimiter').value === "\\t" ? "\t" : document.getElementById('delimiter').value, // auto-detect
+                        dynamicTyping: true,
+                        escapeChar: '"',
+                        header: document.getElementById('header').value,
+                        newline: "", // auto-detect
+                        preview: 0,
+                        quoteChar: '"',
+                        skipEmptyLines: true,
+                        skipFirstNLines: 0,
+                    }
+                );
+                document.getElementById('jsonTsv_json').value = jsonStr;
+
+                document.getElementById('jsonTsv_alert').innerText = '';
+                document.getElementById('jsonTsv_alert').style.display = 'none';
+            } catch (error) {
+                // console.error(error);
+                document.getElementById('jsonTsv_alert').innerText = error;
+                document.getElementById('jsonTsv_alert').style.display = 'block';
+            }
         }
     });
 
