@@ -275,4 +275,30 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
+    // Password
+    const generatePassword = () => {
+
+        let charSet = (document.getElementById('password_source').value).replaceAll('\n', '');
+        let length = document.getElementById('password_length').value;
+        let generated = '';
+        for (let i = 0; i < length; i++) {
+            generated += charSet[Math.floor(Math.random() * charSet.length)];
+        }
+
+        document.getElementById('password_generated').value = generated;
+    };
+
+
+    document.getElementById('password_generate').addEventListener('click', function () {
+        generatePassword();
+    });
+
+    document.getElementById('password_source').addEventListener('change', function () {
+        generatePassword();
+    });
+
+    document.getElementById('password_length').addEventListener('change', function () {
+        generatePassword();
+    });
+
 });

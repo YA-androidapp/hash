@@ -12,3 +12,8 @@
 #jsonYaml_alert {
     display: none;
 }
+
+#password_source,
+#password_generated {
+    font-family: 'Roboto Mono', monospace;
+}
