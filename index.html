@@ -195,6 +195,21 @@ Key02: Val02"></textarea>
                                     <label for="encodeuri_decoded" class="form-label">
                                         Message
                                     </label>
+
+                                    <select class="form-select" aria-label="Charset" id="encodeuri_charset"
+                                        name="encodeuri_charset">
+                                        <option value="ASCII">ASCII</option>
+                                        <option value="BINARY">BINARY</option>
+                                        <option value="EUCJP">EUCJP</option>
+                                        <option value="JIS">JIS</option>
+                                        <option value="SJIS">SJIS</option>
+                                        <option value="UTF8" selected>UTF8</option>
+                                        <option value="UTF16">UTF16</option>
+                                        <option value="UTF16BE">UTF16BE</option>
+                                        <option value="UTF16LE">UTF16LE</option>
+                                        <option value="UTF32">UTF32</option>
+                                        <option value="UNICODE">UNICODE</option>
+                                    </select>
                                 </div>
                                 <div class="col-8">
                                     <textarea class="form-control" id="encodeuri_decoded" rows="6"
@@ -406,9 +421,11 @@ ABCDEFGHIJKLMNOPQRSTUVWXYZ
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
-    <script src=" https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js "></script>
-    <script src=" https://cdn.jsdelivr.net/npm/yamljs@0.3.0/dist/yaml.min.js "></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js "></script>
+    <script src="https://cdn.jsdelivr.net/npm/yamljs@0.3.0/dist/yaml.min.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/encoding-japanese/2.0.0/encoding.min.js"></script>
 
+    <script src="js/encode.js"></script>
     <script src="js/hashes.js"></script>
     <script src="js/tsv.js"></script>
     <script src="js/yaml.js"></script>

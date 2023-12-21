@@ -42,11 +42,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
     // URLエンコード
-    document.getElementById('encodeuri_decoded').addEventListener('keyup', function () {
-        document.getElementById('encodeuri_encoded').value = encodeURI(
-            document.getElementById('encodeuri_decoded').value
-        );
-    });
+    const performEncodeUrI = _ => {
+        let unicodeArray = Encoding.stringToCode(document.getElementById('encodeuri_decoded').value);
+        let sjisArray = Encoding.convert(unicodeArray, {
+            to: document.getElementById('encodeuri_charset').value,
+            from: 'UNICODE'
+        });
+        let encoded = Encoding.urlEncode(sjisArray);
+        document.getElementById('encodeuri_encoded').value = encoded;
+    };
+    document.getElementById('encodeuri_charset').addEventListener('change', performEncodeUrI);
+    document.getElementById('encodeuri_decoded').addEventListener('keyup', performEncodeUrI);
 
     document.getElementById('encodeuricomponent_decoded').addEventListener('keyup', function () {
         document.getElementById('encodeuricomponent_encoded').value = encodeURIComponent(
@@ -61,7 +67,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 document.getElementById('encodeuri_encoded').value
             );
         } catch (err) {
-            decoded = document.getElementById('encodeuri_encoded').value;
+            if (err == 'URIError: malformed URI sequence') {
+                let encoded = document.getElementById('encodeuri_encoded').value;
+
+                let detectedEncoding = Encoding.detect(Encoding.urlDecode(encoded));
+                console.log('Character encoding is ' + detectedEncoding);
+
+                decoded = Encoding.codeToString(Encoding.convert(Encoding.urlDecode(encoded), {
+                    to: 'UNICODE',
+                    from: detectedEncoding
+                }));
+            } else {
+                decoded = document.getElementById('encodeuri_encoded').value;
+            }
         }
 
         document.getElementById('encodeuri_decoded').value = decoded;
