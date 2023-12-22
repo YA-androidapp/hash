@@ -17,3 +17,7 @@
 #password_generated {
     font-family: 'Roboto Mono', monospace;
 }
+
+#codeConversion_resultBlob {
+    display: none;
+}

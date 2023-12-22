@@ -32,6 +32,10 @@
     <!-- Accordion -->
     <div class="container my-5">
         <div class="accordion" id="accordionExample">
+
+
+
+
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingJsonTsv">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -180,6 +184,108 @@ Key02: Val02"></textarea>
                 </div>
             </div>
             <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseCodeConversion" aria-expanded="false"
+                        aria-controls="collapseCodeConversion">
+                        文字コード変換
+                    </button>
+                </h2>
+                <div id="collapseCodeConversion" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="container my-5">
+                            <div class="row">
+                                <div class="col-2 offset-1 text-start">
+                                    <label for="codeConversion_message" class="form-label">
+                                        Message
+                                    </label>
+                                    <select class="form-select" aria-label="Charset" id="codeConversion_charset"
+                                        name="codeConversion_charset">
+                                        <option value="ASCII">ASCII</option>
+                                        <option value="BINARY">BINARY</option>
+                                        <option value="EUCJP">EUCJP</option>
+                                        <option value="JIS">JIS</option>
+                                        <option value="SJIS">SJIS</option>
+                                        <option value="UTF8" selected>UTF8</option>
+                                        <option value="UTF16">UTF16</option>
+                                        <option value="UTF16BE">UTF16BE</option>
+                                        <option value="UTF16LE">UTF16LE</option>
+                                        <option value="UTF32">UTF32</option>
+                                        <option value="UNICODE">UNICODE</option>
+                                    </select>
+                                </div>
+                                <div class="col-8">
+                                    <textarea class="form-control" id="codeConversion_message" rows="6"
+                                        placeholder=""></textarea>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-2 offset-1 text-start">
+                                    <label for="codeConversion_result" class="form-label">
+                                        Result
+                                    </label>
+                                </div>
+                                <div class="col-8">
+                                    <textarea class="form-control" id="codeConversion_result" rows="6"></textarea>
+                                    <a href="#" id="codeConversion_resultBlob"
+                                        name="codeConversion_resultBlob">名前を付けて保存</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseBase64" aria-expanded="false" aria-controls="collapseBase64">
+                        Base64
+                    </button>
+                </h2>
+                <div id="collapseBase64" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="container my-5">
+                            <div class="row">
+                                <div class="col-2 offset-1 text-start">
+                                    <label for="base64_decoded" class="form-label">
+                                        Message
+                                    </label>
+                                    <select class="form-select" aria-label="Charset" id="base64_charset"
+                                        name="base64_charset">
+                                        <option value="ASCII">ASCII</option>
+                                        <option value="BINARY">BINARY</option>
+                                        <option value="EUCJP">EUCJP</option>
+                                        <option value="JIS">JIS</option>
+                                        <option value="SJIS">SJIS</option>
+                                        <option value="UTF8" selected>UTF8</option>
+                                        <option value="UTF16">UTF16</option>
+                                        <option value="UTF16BE">UTF16BE</option>
+                                        <option value="UTF16LE">UTF16LE</option>
+                                        <option value="UTF32">UTF32</option>
+                                        <option value="UNICODE">UNICODE</option>
+                                    </select>
+                                </div>
+                                <div class="col-8">
+                                    <textarea class="form-control" id="base64_decoded" rows="6"
+                                        placeholder=""></textarea>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-2 offset-1 text-start">
+                                    <label for="base64_encoded" class="form-label">
+                                        Encoded
+                                    </label>
+                                </div>
+                                <div class="col-8">
+                                    <textarea class="form-control" id="base64_encoded" rows="6"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
                 <h2 class="accordion-header" id="headingEncodeURI">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseEncodeURI" aria-expanded="false" aria-controls="collapseEncodeURI">
@@ -213,7 +319,7 @@ Key02: Val02"></textarea>
                                 </div>
                                 <div class="col-8">
                                     <textarea class="form-control" id="encodeuri_decoded" rows="6"
-                                        placeholder=" A-Z a-z 0-9 ; , / ? : @ & = + $ - _ . ! ~ * ' ( ) # は変換されない"></textarea>
+                                        placeholder=" A-Z a-z 0-9 - _ . ! ~ * ' ( )    ; , / ? : @ & = + $ # は変換されない"></textarea>
                                 </div>
                             </div>
                             <div class="row mt-1">

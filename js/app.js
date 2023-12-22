@@ -22,22 +22,82 @@ const text2hash = (hashtype, plaintext) => {
 window.addEventListener('DOMContentLoaded', (event) => {
 
     // ハッシュ値
-    document.getElementById('text2hash_hashed').addEventListener('focus', function () {
+    document.getElementById('text2hash_hashed').addEventListener('focus', _ => {
         this.select();
     });
 
-    document.getElementById('hashtype').addEventListener('change', function () {
+    document.getElementById('hashtype').addEventListener('change', _ => {
         document.getElementById('text2hash_hashed').value = text2hash(
             document.getElementById('hashtype').value,
             document.getElementById('text2hash_message').value
         );
     });
 
-    document.getElementById('text2hash_message').addEventListener('keyup', function () {
+    document.getElementById('text2hash_message').addEventListener('keyup', _ => {
         document.getElementById('text2hash_hashed').value = text2hash(
             document.getElementById('hashtype').value,
             document.getElementById('text2hash_message').value
         );
+    });
+
+
+    // 文字コード変換
+    const saveBinary = (array) => {
+        let buffer = new ArrayBuffer(array.length);
+        let dv = new DataView(buffer);
+
+        array.forEach((v, i) => {
+            dv.setUint8(i, v);
+        })
+
+        var a = document.getElementById('codeConversion_resultBlob');
+        a.style.display = 'inline';
+
+        var blob = new Blob([buffer], { type: 'octet/stream' }),
+            url = window.URL.createObjectURL(blob);
+
+        a.href = url;
+        a.download = 'result.txt';
+        // a.click();
+        window.URL.revokeObjectURL(url);
+    };
+
+    const performCodeConversion = _ => {
+        let unicodeArray = Encoding.stringToCode(document.getElementById('codeConversion_message').value);
+        let convArray = Encoding.convert(unicodeArray, {
+            to: document.getElementById('codeConversion_charset').value,
+            from: 'UNICODE'
+        });
+        document.getElementById('codeConversion_result').value = convArray.join(' ');
+        saveBinary(convArray);
+    };
+    document.getElementById('codeConversion_charset').addEventListener('change', performCodeConversion);
+    document.getElementById('codeConversion_message').addEventListener('keyup', performCodeConversion);
+
+
+    // Base64
+    const performBase64Encode = _ => {
+        let unicodeArray = Encoding.stringToCode(document.getElementById('base64_decoded').value);
+        let sjisArray = Encoding.convert(unicodeArray, {
+            to: document.getElementById('base64_charset').value,
+            from: 'UNICODE'
+        });
+        let encoded = Encoding.base64Encode(sjisArray);
+        document.getElementById('base64_encoded').value = encoded;
+    };
+    document.getElementById('base64_charset').addEventListener('change', performBase64Encode);
+    document.getElementById('base64_decoded').addEventListener('keyup', performBase64Encode);
+
+    document.getElementById('base64_encoded').addEventListener('keyup', _ => {
+        let encoded = document.getElementById('base64_encoded').value;
+        let decoded = Encoding.base64Decode(encoded);
+        let detectedEncoding = Encoding.detect(decoded);
+        console.log('Character encoding is ' + detectedEncoding);
+
+        document.getElementById('base64_decoded').value = Encoding.codeToString(Encoding.convert(decoded, {
+            to: 'UNICODE',
+            from: detectedEncoding
+        }));
     });
 
 
@@ -54,48 +114,28 @@ window.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('encodeuri_charset').addEventListener('change', performEncodeUrI);
     document.getElementById('encodeuri_decoded').addEventListener('keyup', performEncodeUrI);
 
-    document.getElementById('encodeuricomponent_decoded').addEventListener('keyup', function () {
+    document.getElementById('encodeuri_encoded').addEventListener('keyup', _ => {
+        let encoded = document.getElementById('encodeuri_encoded').value;
+        let decoded = Encoding.urlDecode(encoded);
+        let detectedEncoding = Encoding.detect(decoded);
+        console.log('Character encoding is ' + detectedEncoding);
+
+        document.getElementById('encodeuri_decoded').value = Encoding.codeToString(Encoding.convert(decoded, {
+            to: 'UNICODE',
+            from: detectedEncoding
+        }));
+    });
+
+    document.getElementById('encodeuricomponent_decoded').addEventListener('keyup', _ => {
         document.getElementById('encodeuricomponent_encoded').value = encodeURIComponent(
             document.getElementById('encodeuricomponent_decoded').value
         );
     });
 
-    document.getElementById('encodeuri_encoded').addEventListener('keyup', function () {
-        let decoded = '';
-        try {
-            decoded = decodeURI(
-                document.getElementById('encodeuri_encoded').value
-            );
-        } catch (err) {
-            if (err == 'URIError: malformed URI sequence') {
-                let encoded = document.getElementById('encodeuri_encoded').value;
-
-                let detectedEncoding = Encoding.detect(Encoding.urlDecode(encoded));
-                console.log('Character encoding is ' + detectedEncoding);
-
-                decoded = Encoding.codeToString(Encoding.convert(Encoding.urlDecode(encoded), {
-                    to: 'UNICODE',
-                    from: detectedEncoding
-                }));
-            } else {
-                decoded = document.getElementById('encodeuri_encoded').value;
-            }
-        }
-
-        document.getElementById('encodeuri_decoded').value = decoded;
-    });
-
-    document.getElementById('encodeuricomponent_encoded').addEventListener('keyup', function () {
-        let decoded = '';
-        try {
-            decoded = decodeURIComponent(
-                document.getElementById('encodeuricomponent_encoded').value
-            );
-        } catch (err) {
-            decoded = document.getElementById('encodeuricomponent_encoded').value;
-        }
-
-        document.getElementById('encodeuricomponent_decoded').value = decoded;
+    document.getElementById('encodeuricomponent_encoded').addEventListener('keyup', _ => {
+        document.getElementById('encodeuricomponent_decoded').value = decodeURIComponent(
+            document.getElementById('encodeuricomponent_encoded').value
+        );
     });
 
 
@@ -147,14 +187,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
     };
 
-    document.getElementById('escapetype').addEventListener('change', function () {
+    document.getElementById('escapetype').addEventListener('change', _ => {
         document.getElementById('charref_escaped').value = escapeHTML(
             document.getElementById('escapetype').value,
             document.getElementById('charref_message').value
         );
     });
 
-    document.getElementById('charref_message').addEventListener('keyup', function () {
+    document.getElementById('charref_message').addEventListener('keyup', _ => {
         document.getElementById('charref_escaped').value = escapeHTML(
             document.getElementById('escapetype').value,
             document.getElementById('charref_message').value
@@ -163,20 +203,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
     // JSON <==> TSV
-    document.getElementById('clearJsonTsv').addEventListener('click', function () {
+    document.getElementById('clearJsonTsv').addEventListener('click', _ => {
         document.getElementById('jsonTsv_json').value = '';
         document.getElementById('jsonTsv_tsv').value = '';
     });
 
-    document.getElementById('insertTabTsv').addEventListener('click', function () {
+    document.getElementById('insertTabTsv').addEventListener('click', _ => {
         const jsonTsvTextareaTsv = document.getElementById('jsonTsv_tsv');
 
         jsonTsvTextareaTsv.value = jsonTsvTextareaTsv.value.substr(0, jsonTsvTextareaTsv.selectionStart)
-            + "\t"
+            + '\t'
             + jsonTsvTextareaTsv.value.substr(jsonTsvTextareaTsv.selectionStart);
     });
 
-    document.getElementById('jsonTsv_json').addEventListener('keyup', function () {
+    document.getElementById('jsonTsv_json').addEventListener('keyup', _ => {
         if (document.getElementById('jsonTsv_json').value === '') {
             document.getElementById('jsonTsv_tsv').value = '';
 
@@ -190,9 +230,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         quotes: false, //or array of booleans
                         quoteChar: '"',
                         escapeChar: '"',
-                        delimiter: document.getElementById('delimiter').value === "" ? "," : (document.getElementById('delimiter').value === "\\t" ? "\t" : document.getElementById('delimiter').value),
+                        delimiter: document.getElementById('delimiter').value === '' ? ',' : (document.getElementById('delimiter').value === '\\t' ? '\t' : document.getElementById('delimiter').value),
                         header: document.getElementById('header').value,
-                        newline: "\r\n",
+                        newline: '\r\n',
                         skipEmptyLines: true, //other option is 'greedy', meaning skip delimiters, quotes, and whitespace.
                         columns: null //or array of strings
                     }
@@ -209,7 +249,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
-    document.getElementById('jsonTsv_tsv').addEventListener('keyup', function () {
+    document.getElementById('jsonTsv_tsv').addEventListener('keyup', _ => {
         if (document.getElementById('jsonTsv_tsv').value === '') {
             document.getElementById('jsonTsv_json').value = '';
 
@@ -220,12 +260,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 const jsonStr = tsv2json(
                     document.getElementById('jsonTsv_tsv').value,
                     {
-                        comments: "#",
-                        delimiter: document.getElementById('delimiter').value === "\\t" ? "\t" : document.getElementById('delimiter').value, // auto-detect
+                        comments: '#',
+                        delimiter: document.getElementById('delimiter').value === '\\t' ? '\t' : document.getElementById('delimiter').value, // auto-detect
                         dynamicTyping: true,
                         escapeChar: '"',
                         header: document.getElementById('header').value,
-                        newline: "", // auto-detect
+                        newline: '', // auto-detect
                         preview: 0,
                         quoteChar: '"',
                         skipEmptyLines: true,
@@ -246,12 +286,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
     // JSON <==> YAML
-    document.getElementById('clearJsonYaml').addEventListener('click', function () {
+    document.getElementById('clearJsonYaml').addEventListener('click', _ => {
         document.getElementById('jsonYaml_json').value = '';
         document.getElementById('jsonYaml_yaml').value = '';
     });
 
-    document.getElementById('jsonYaml_json').addEventListener('keyup', function () {
+    document.getElementById('jsonYaml_json').addEventListener('keyup', _ => {
         if (document.getElementById('jsonYaml_json').value === '') {
             document.getElementById('jsonYaml_yaml').value = '';
 
@@ -272,7 +312,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
-    document.getElementById('jsonYaml_yaml').addEventListener('keyup', function () {
+    document.getElementById('jsonYaml_yaml').addEventListener('keyup', _ => {
         if (document.getElementById('jsonYaml_yaml').value === '') {
             document.getElementById('jsonYaml_json').value = '';
 
@@ -307,15 +347,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
     };
 
 
-    document.getElementById('password_generate').addEventListener('click', function () {
+    document.getElementById('password_generate').addEventListener('click', _ => {
         generatePassword();
     });
 
-    document.getElementById('password_source').addEventListener('change', function () {
+    document.getElementById('password_source').addEventListener('change', _ => {
         generatePassword();
     });
 
-    document.getElementById('password_length').addEventListener('change', function () {
+    document.getElementById('password_length').addEventListener('change', _ => {
         generatePassword();
     });
 
