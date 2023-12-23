@@ -33,9 +33,6 @@
     <div class="container my-5">
         <div class="accordion" id="accordionExample">
 
-
-
-
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingJsonTsv">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -289,7 +286,7 @@ Key02: Val02"></textarea>
                 <h2 class="accordion-header" id="headingEncodeURI">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseEncodeURI" aria-expanded="false" aria-controls="collapseEncodeURI">
-                        URLエンコード／デコード (EncodeURI / DecodeURI )
+                        URLエンコード／デコード
                     </button>
                 </h2>
                 <div id="collapseEncodeURI" class="accordion-collapse collapse" aria-labelledby="headingEncodeURI"
@@ -318,8 +315,10 @@ Key02: Val02"></textarea>
                                     </select>
                                 </div>
                                 <div class="col-8">
-                                    <textarea class="form-control" id="encodeuri_decoded" rows="6"
-                                        placeholder=" A-Z a-z 0-9 - _ . ! ~ * ' ( )    ; , / ? : @ & = + $ # は変換されない"></textarea>
+                                    <textarea class="form-control" id="encodeuri_decoded" rows="6" placeholder="EncodeURI: A-Z a-z 0-9 - _ . ! ~ * ' ( )    ; , / ? : @ & = + $ # は変換されない
+EncodeURIComponent: A-Z a-z 0-9 - _ . ! ~ * ' ( ) は変換されない
+
+文字コード指定はEncodeURIComponentのみ"></textarea>
                                 </div>
                             </div>
                             <div class="row mt-1">
@@ -328,45 +327,13 @@ Key02: Val02"></textarea>
                                         Encoded
                                     </label>
                                 </div>
-                                <div class="col-8">
-                                    <textarea class="form-control" id="encodeuri_encoded" rows="6"></textarea>
+                                <div class="col-4">
+                                    <textarea class="form-control" id="encodeuri_encoded" rows="6"
+                                        placeholder="EncodeURI"></textarea>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingEncodeURIComponent">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseEncodeURIComponent" aria-expanded="false"
-                        aria-controls="collapseEncodeURIComponent">
-                        URLエンコード／デコード ( EncodeURIComponent / DecodeURIComponent )
-                    </button>
-                </h2>
-                <div id="collapseEncodeURIComponent" class="accordion-collapse collapse"
-                    aria-labelledby="headingEncodeURIComponent" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <div class="container my-5">
-                            <div class="row">
-                                <div class="col-2 offset-1 text-start">
-                                    <label for="encodeuricomponent_decoded" class="form-label">
-                                        Message
-                                    </label>
-                                </div>
-                                <div class="col-8">
-                                    <textarea class="form-control" id="encodeuricomponent_decoded" rows="6"
-                                        placeholder=" A-Z a-z 0-9 - _ . ! ~ * ' ( ) は変換されない"></textarea>
-                                </div>
-                            </div>
-                            <div class="row mt-1">
-                                <div class="col-2 offset-1 text-start">
-                                    <label for="encodeuricomponent_encoded" class="form-label">
-                                        Encoded
-                                    </label>
-                                </div>
-                                <div class="col-8">
-                                    <textarea class="form-control" id="encodeuricomponent_encoded" rows="6"></textarea>
+                                <div class="col-4">
+                                    <textarea class="form-control" id="encodeuricomponent_encoded" rows="6"
+                                        placeholder="EncodeURIComponent"></textarea>
                                 </div>
                             </div>
                         </div>

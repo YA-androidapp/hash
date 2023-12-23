@@ -102,40 +102,22 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
     // URLエンコード
-    const performEncodeUrI = _ => {
-        let unicodeArray = Encoding.stringToCode(document.getElementById('encodeuri_decoded').value);
-        let sjisArray = Encoding.convert(unicodeArray, {
-            to: document.getElementById('encodeuri_charset').value,
-            from: 'UNICODE'
-        });
-        let encoded = Encoding.urlEncode(sjisArray);
-        document.getElementById('encodeuri_encoded').value = encoded;
-    };
-    document.getElementById('encodeuri_charset').addEventListener('change', performEncodeUrI);
-    document.getElementById('encodeuri_decoded').addEventListener('keyup', performEncodeUrI);
-
-    document.getElementById('encodeuri_encoded').addEventListener('keyup', _ => {
-        let encoded = document.getElementById('encodeuri_encoded').value;
-        let decoded = Encoding.urlDecode(encoded);
-        let detectedEncoding = Encoding.detect(decoded);
-        console.log('Character encoding is ' + detectedEncoding);
-
-        document.getElementById('encodeuri_decoded').value = Encoding.codeToString(Encoding.convert(decoded, {
-            to: 'UNICODE',
-            from: detectedEncoding
-        }));
+    document.getElementById('encodeuri_charset').addEventListener('change', _ => {
+        performEncodeUri();
+        performEncodeURIComponent();
     });
 
-    document.getElementById('encodeuricomponent_decoded').addEventListener('keyup', _ => {
-        document.getElementById('encodeuricomponent_encoded').value = encodeURIComponent(
-            document.getElementById('encodeuricomponent_decoded').value
-        );
+    document.getElementById('encodeuri_decoded').addEventListener('keyup', _ => {
+        performEncodeUri();
+        performEncodeURIComponent();
+    });
+
+    document.getElementById('encodeuri_encoded').addEventListener('keyup', _ => {
+        performDecodeUri();
     });
 
     document.getElementById('encodeuricomponent_encoded').addEventListener('keyup', _ => {
-        document.getElementById('encodeuricomponent_decoded').value = decodeURIComponent(
-            document.getElementById('encodeuricomponent_encoded').value
-        );
+        performDecodeURIComponent();
     });
 
 
